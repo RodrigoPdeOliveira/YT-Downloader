@@ -5,8 +5,13 @@ import downloader
 
 def get_links():
     links = link_text.get('1.0', END)
-    links = [links]
+    links = links.split('\n')
+    links.remove('')
     return links
+
+
+def clear_links():
+    link_text.delete('1.0', END)
 
 
 def mp3_dl():
@@ -33,7 +38,7 @@ link_text.grid(column=1, row=0, columnspan=4)
 
 mp3_dl = ttk.Button(mainframe, text='Download MP3', command=mp3_dl).grid(column=1, row=2, sticky=EW)
 mp4_dl = ttk.Button(mainframe, text='Download MP4', command=mp4_dl).grid(column=2, row=2, sticky=EW)
-clear_links = ttk.Button(mainframe, text='Clear links').grid(column=3, row=2, sticky=EW)
+clear_links = ttk.Button(mainframe, text='Clear links', command=clear_links).grid(column=3, row=2, sticky=EW)
 quit_button = ttk.Button(mainframe, text='Quit', command=quit).grid(column=4, row=2, sticky=EW)
 
 root.mainloop()
