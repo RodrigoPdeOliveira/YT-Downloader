@@ -1,6 +1,14 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import filedialog
 import downloader
+
+
+def output_folder():
+    folder = filedialog.askdirectory()
+    global path_folder
+    path_folder = folder
+    print(f'Output path: {path_folder}')
 
 
 def get_links():
@@ -16,13 +24,21 @@ def clear_links():
 
 def mp3_dl():
     links = get_links()
-    downloader.mp3(links)
+    if path_folder is not None:
+        downloader.mp3(links, path_folder)
+    else:
+        downloader.mp3(links)
 
 
 def mp4_dl():
     links = get_links()
-    downloader.mp4(links)
+    if path_folder is not None:
+        downloader.mp4(links, path_folder)
+    else:
+        downloader.mp4(links)
 
+
+path_folder = None
 
 root = Tk()
 root.title('Youtube Downloader')
@@ -36,9 +52,11 @@ link_lbl = ttk.Label(mainframe, text='Link(s):', padding='0 0 10').grid(column=0
 link_text = Text(mainframe, width=50, height=10)
 link_text.grid(column=1, row=0, columnspan=4)
 
-mp3_dl = ttk.Button(mainframe, text='Download MP3', command=mp3_dl).grid(column=1, row=2, sticky=EW)
-mp4_dl = ttk.Button(mainframe, text='Download MP4', command=mp4_dl).grid(column=2, row=2, sticky=EW)
-clear_links = ttk.Button(mainframe, text='Clear links', command=clear_links).grid(column=3, row=2, sticky=EW)
+
+folder_button = ttk.Button(mainframe, text='Select folder', command=output_folder).grid(column=0, row=2, sticky=EW)
+mp3_button = ttk.Button(mainframe, text='Download MP3', command=mp3_dl).grid(column=1, row=2, sticky=EW)
+mp4_button = ttk.Button(mainframe, text='Download MP4', command=mp4_dl).grid(column=2, row=2, sticky=EW)
+clear_lbl = ttk.Button(mainframe, text='Clear links', command=clear_links).grid(column=3, row=2, sticky=EW)
 quit_button = ttk.Button(mainframe, text='Quit', command=quit).grid(column=4, row=2, sticky=EW)
 
 root.mainloop()
