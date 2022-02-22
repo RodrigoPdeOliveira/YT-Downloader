@@ -5,6 +5,8 @@ import downloader
 
 
 def output_folder():
+    """Sets downloaded files output folder
+    """
     folder = filedialog.askdirectory()
     global path_folder
     path_folder = folder
@@ -12,6 +14,11 @@ def output_folder():
 
 
 def get_links():
+    """Gets links from UI element
+
+    Returns:
+        list[str]: List of links
+    """
     links = link_text.get('1.0', END)
     links = links.split('\n')
     links.remove('')
@@ -19,10 +26,14 @@ def get_links():
 
 
 def clear_links():
+    """Clear all links in UI element
+    """
     link_text.delete('1.0', END)
 
 
 def mp3_dl():
+    """Checks if a new path was defined, else uses standard path.
+    """
     links = get_links()
     if path_folder is not None:
         downloader.mp3(links, path_folder)
@@ -31,6 +42,8 @@ def mp3_dl():
 
 
 def mp4_dl():
+    """Checks if a new path was defined, else uses standard path.
+    """
     links = get_links()
     if path_folder is not None:
         downloader.mp4(links, path_folder)
